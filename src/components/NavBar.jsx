@@ -1,12 +1,22 @@
+import { useSelector } from "react-redux";
+
 const NavBar = () => {
+  
+  // it is used to get the user data from the redux store
+  // useSelector is a hook that allows you to extract data from the Redux store state
+  const user = useSelector((store) => store.user);
+
+  
   return (
     <div className="navbar bg-base-300">
   <div className="flex-1">
     <a className="btn btn-ghost text-xl">DevTindar</a>
   </div>
+  {user && (
   <div className="flex-none gap-2">
-    <div className="form-control"></div>
-    <div className="dropdown dropdown-end mx-5">
+    <div className="form-control">Welcome, {user.firstName}  </div>
+
+    <div className="dropdown dropdown-end mx-5 flex">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           <img
@@ -27,7 +37,10 @@ const NavBar = () => {
         <li><a>Logout</a></li>
       </ul>
     </div>
+
+  
   </div>
+  )}
 </div>
     
   )
