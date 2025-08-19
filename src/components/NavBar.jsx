@@ -1,11 +1,27 @@
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch,useSelector } from "react-redux";
+import { Link,useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
+import axios from "axios";
+import { removeUser } from "../utils/userSlice";
+
 
 const NavBar = () => {
   
   // it is used to get the user data from the redux store
   // useSelector is a hook that allows you to extract data from the Redux store state
   const user = useSelector((store) => store.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+      dispatch(removeUser());
+      navigate("/login");
+
+    } catch (err) {
+  }
+}
 
   
   return (
@@ -35,7 +51,7 @@ const NavBar = () => {
           </Link>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li><a onClick= {handleLogout}>Logout</a></li>
       </ul>
     </div>
 
